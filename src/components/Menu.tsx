@@ -77,7 +77,7 @@ const Menu: React.FC<MenuProps> = ({ menuItems, addToCart, cartItems, updateQuan
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {selectedCategory === 'all' && (
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-noto font-semibold text-black mb-4">Our Customes</h2>
+        <h2 className="text-4xl font-noto font-semibold text-black mb-4">Our Costumes</h2>
         <div className="text-gray-700 max-w-3xl mx-auto text-left space-y-5">
           <div>
             <h3 className="font-semibold text-rental-dark mb-2">Reservation Policy</h3>

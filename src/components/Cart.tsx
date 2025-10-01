@@ -39,6 +39,10 @@ const Cart: React.FC<CartProps> = ({
     );
   }
 
+  const securityDeposit = 1000;
+  const subtotal = getTotalPrice();
+  const grandTotal = subtotal + securityDeposit;
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-8">
@@ -113,9 +117,20 @@ const Cart: React.FC<CartProps> = ({
       </div>
 
       <div className="bg-white rounded-xl shadow-sm p-6">
-        <div className="flex items-center justify-between text-2xl font-noto font-semibold text-rental-dark mb-6">
-          <span>Total:</span>
-          <span>₱{parseFloat(getTotalPrice() || 0).toFixed(2)}</span>
+        <div className="space-y-2 mb-6">
+          <div className="flex items-center justify-between text-base text-gray-700">
+            <span>Subtotal</span>
+            <span>₱{subtotal.toFixed(2)}</span>
+          </div>
+          <div className="flex items-center justify-between text-base text-gray-700">
+            <span>Security Deposit</span>
+            <span>₱{securityDeposit.toFixed(2)}</span>
+          </div>
+          <div className="border-t border-gray-200 pt-3" />
+          <div className="flex items-center justify-between text-2xl font-noto font-semibold text-rental-dark">
+            <span>Total</span>
+            <span>₱{grandTotal.toFixed(2)}</span>
+          </div>
         </div>
         
         <button

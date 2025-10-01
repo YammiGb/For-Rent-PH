@@ -38,6 +38,23 @@ const Checkout: React.FC<CheckoutProps> = ({ cartItems, totalPrice, onBack }) =>
 
   const selectedPaymentMethod = paymentMethods.find(method => method.id === paymentMethod);
 
+  // Pricing helpers
+  const SECURITY_DEPOSIT = 1000;
+  const msPerDay = 1000 * 60 * 60 * 24;
+  const getRentalDays = (value: string) => {
+    if (!value) return 1;
+    const now = new Date();
+    const end = new Date(value);
+    const startDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const endDay = new Date(end.getFullYear(), end.getMonth(), end.getDate()).getTime();
+    const diffDays = Math.ceil((endDay - startDay) / msPerDay);
+    return Math.max(1, diffDays);
+  };
+
+  const rentalDays = getRentalDays(returnDate);
+  const rentalAmount = totalPrice * rentalDays;
+  const grandTotal = rentalAmount + SECURITY_DEPOSIT;
+
   const handleProceedToPayment = () => {
     setStep('payment');
   };
@@ -78,8 +95,10 @@ ${cartItems.map(item => {
   return itemDetails;
 }).join('\n')}
 
-💰 TOTAL: ₱${totalPrice}
-${serviceType === 'delivery' ? `🛵 DELIVERY FEE:` : ''}
+🗓️ Rental Days: ${rentalDays}
+💵 Rental Amount: ₱${rentalAmount}
+🔒 Security Deposit: ₱${SECURITY_DEPOSIT}
+💰 GRAND TOTAL: ₱${grandTotal}
 
 💳 Payment: ${selectedPaymentMethod?.name || paymentMethod}
 📸 Payment Screenshot: Please attach your payment receipt screenshot
@@ -140,12 +159,7 @@ Please confirm this order to proceed. Thank you for choosing For Rent PH! 🥟
               ))}
             </div>
             
-            <div className="border-t border-gray-200 pt-4">
-              <div className="flex items-center justify-between text-2xl font-noto font-semibold text-rental-dark">
-                <span>Total:</span>
-                <span>₱{totalPrice}</span>
-              </div>
-            </div>
+            {/* Totals hidden on Order Details; shown in Payment step after return date is set */}
           </div>
 
           {/* Customer Details Form */}
@@ -362,7 +376,7 @@ Please confirm this order to proceed. Thank you for choosing For Rent PH! 🥟
                   <p className="text-sm text-gray-600 mb-1">{selectedPaymentMethod.name}</p>
                   <p className="font-mono text-rental-dark font-medium">{selectedPaymentMethod.account_number}</p>
                   <p className="text-sm text-gray-600 mb-3">Account Name: {selectedPaymentMethod.account_name}</p>
-                  <p className="text-xl font-semibold text-rental-dark">Amount: ₱{totalPrice}</p>
+                  <p className="text-xl font-semibold text-rental-dark">Amount: ₱{grandTotal}</p>
                 </div>
                 <div className="flex-shrink-0">
                   <img 
@@ -439,12 +453,29 @@ Please confirm this order to proceed. Thank you for choosing For Rent PH! 🥟
             ))}
           </div>
           
-          <div className="border-t border-gray-200 pt-4 mb-6">
-            <div className="flex items-center justify-between text-2xl font-noto font-semibold text-rental-dark">
-              <span>Total:</span>
-              <span>₱{totalPrice}</span>
+            <div className="border-t border-gray-200 pt-4 mb-6 space-y-2">
+              <div className="flex items-center justify-between text-base text-gray-700">
+                <span>Subtotal</span>
+                <span>₱{totalPrice}</span>
+              </div>
+              <div className="flex items-center justify-between text-base text-gray-700">
+                <span>Rental Days</span>
+                <span>{rentalDays}</span>
+              </div>
+              <div className="flex items-center justify-between text-base text-gray-700">
+                <span>Rental Amount</span>
+                <span>₱{rentalAmount}</span>
+              </div>
+              <div className="flex items-center justify-between text-base text-gray-700">
+                <span>Security Deposit</span>
+                <span>₱{SECURITY_DEPOSIT}</span>
+              </div>
+              <div className="border-t border-gray-200 pt-3" />
+              <div className="flex items-center justify-between text-2xl font-noto font-semibold text-rental-dark">
+                <span>Total</span>
+                <span>₱{grandTotal}</span>
+              </div>
             </div>
-          </div>
 
           <button
             onClick={handlePlaceOrder}
