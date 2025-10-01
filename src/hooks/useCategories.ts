@@ -28,7 +28,18 @@ export const useCategories = () => {
 
       if (fetchError) throw fetchError;
 
-      setCategories(data || []);
+      // Ensure default ordering and specifically place 'more' after 'winter-edition'
+      const ordered = (data || []).slice().sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0));
+
+      const winterIdx = ordered.findIndex(c => c.id === 'winter-edition');
+      const moreIdx = ordered.findIndex(c => c.id === 'more');
+
+      if (winterIdx !== -1 && moreIdx !== -1 && moreIdx !== winterIdx + 1) {
+        const [moreCat] = ordered.splice(moreIdx, 1);
+        ordered.splice(winterIdx + 1, 0, moreCat);
+      }
+
+      setCategories(ordered);
       setError(null);
     } catch (err) {
       console.error('Error fetching categories:', err);

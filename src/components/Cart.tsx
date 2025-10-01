@@ -25,12 +25,12 @@ const Cart: React.FC<CartProps> = ({
     return (
       <div className="max-w-4xl mx-auto px-4 py-12">
         <div className="text-center py-16">
-          <div className="text-6xl mb-4">☕</div>
+          
           <h2 className="text-2xl font-playfair font-medium text-black mb-2">Your cart is empty</h2>
           <p className="text-gray-600 mb-6">Add some delicious items to get started!</p>
           <button
             onClick={onContinueShopping}
-            className="bg-red-600 text-white px-6 py-3 rounded-full hover:bg-red-700 transition-all duration-200"
+            className="bg-rental-dark text-white px-6 py-3 rounded-full hover:bg-rental-dark-hover transition-all duration-200"
           >
             Browse Menu
           </button>
@@ -44,16 +44,15 @@ const Cart: React.FC<CartProps> = ({
       <div className="flex items-center justify-between mb-8">
         <button
           onClick={onContinueShopping}
-          className="flex items-center space-x-2 text-gray-600 hover:text-black transition-colors duration-200"
+          className="flex items-center space-x-2 text-gray-600 hover:text-rental-dark transition-colors duration-200"
         >
           <ArrowLeft className="h-5 w-5" />
           <span>Continue Shopping</span>
         </button>
-        <h1 className="text-3xl font-playfair font-semibold text-black">Your Cart</h1>
-        <h1 className="text-3xl font-noto font-semibold text-black">Your Cart</h1>
+        <h1 className="text-3xl font-noto font-semibold text-rental-dark">Your Cart</h1>
         <button
           onClick={clearCart}
-          className="text-red-500 hover:text-red-600 transition-colors duration-200"
+          className="text-rental-dark hover:text-rental-dark-hover transition-colors duration-200"
         >
           Clear All
         </button>
@@ -98,7 +97,7 @@ const Cart: React.FC<CartProps> = ({
                 </div>
                 
                 <div className="text-right">
-                  <p className="text-lg font-semibold text-black">₱{item.totalPrice * item.quantity}</p>
+                  <p className="text-lg font-semibold text-rental-dark">₱{item.totalPrice * item.quantity}</p>
                 </div>
                 
                 <button
@@ -114,14 +113,14 @@ const Cart: React.FC<CartProps> = ({
       </div>
 
       <div className="bg-white rounded-xl shadow-sm p-6">
-        <div className="flex items-center justify-between text-2xl font-noto font-semibold text-black mb-6">
+        <div className="flex items-center justify-between text-2xl font-noto font-semibold text-rental-dark mb-6">
           <span>Total:</span>
           <span>₱{parseFloat(getTotalPrice() || 0).toFixed(2)}</span>
         </div>
         
         <button
           onClick={onCheckout}
-          className="w-full bg-red-600 text-white py-4 rounded-xl hover:bg-red-700 transition-all duration-200 transform hover:scale-[1.02] font-medium text-lg"
+          className="w-full bg-rental-dark text-white py-4 rounded-xl hover:bg-rental-dark-hover transition-all duration-200 transform hover:scale-[1.02] font-medium text-lg"
         >
           Proceed to Checkout
         </button>

@@ -30,7 +30,7 @@ function MainApp() {
     : menuItems.filter(item => item.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-cream-50 font-inter">
+    <div className="min-h-screen bg-rental-off-white font-inter">
       <Header 
         cartItemsCount={cart.getTotalItems()}
         onCartClick={() => handleViewChange('cart')}
@@ -44,6 +44,7 @@ function MainApp() {
           addToCart={cart.addToCart}
           cartItems={cart.cartItems}
           updateQuantity={cart.updateQuantity}
+          selectedCategory={selectedCategory}
         />
       )}
       
@@ -67,12 +68,6 @@ function MainApp() {
         />
       )}
       
-      {currentView === 'menu' && (
-        <FloatingCartButton 
-          itemCount={cart.getTotalItems()}
-          onCartClick={() => handleViewChange('cart')}
-        />
-      )}
     </div>
   );
 }

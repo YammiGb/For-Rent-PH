@@ -2,7 +2,6 @@ import React from 'react';
 import { MenuItem, CartItem } from '../types';
 import { useCategories } from '../hooks/useCategories';
 import MenuItemCard from './MenuItemCard';
-import MobileNav from './MobileNav';
 
 // Preload images for better performance
 const preloadImages = (items: MenuItem[]) => {
@@ -19,11 +18,13 @@ interface MenuProps {
   addToCart: (item: MenuItem, quantity?: number, variation?: any, addOns?: any[]) => void;
   cartItems: CartItem[];
   updateQuantity: (id: string, quantity: number) => void;
+  selectedCategory?: string;
 }
 
-const Menu: React.FC<MenuProps> = ({ menuItems, addToCart, cartItems, updateQuantity }) => {
+const Menu: React.FC<MenuProps> = ({ menuItems, addToCart, cartItems, updateQuantity, selectedCategory }) => {
   const { categories } = useCategories();
   const [activeCategory, setActiveCategory] = React.useState('hot-coffee');
+  const [showMoreInfo, setShowMoreInfo] = React.useState(false);
 
   // Preload images when menu items change
   React.useEffect(() => {
@@ -40,21 +41,7 @@ const Menu: React.FC<MenuProps> = ({ menuItems, addToCart, cartItems, updateQuan
     }
   }, [menuItems, activeCategory]);
 
-  const handleCategoryClick = (categoryId: string) => {
-    setActiveCategory(categoryId);
-    const element = document.getElementById(categoryId);
-    if (element) {
-      const headerHeight = 64; // Header height
-      const mobileNavHeight = 60; // Mobile nav height
-      const offset = headerHeight + mobileNavHeight + 20; // Extra padding
-      const elementPosition = element.offsetTop - offset;
-      
-      window.scrollTo({
-        top: elementPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
+  // MobileNav removed; scrolling handler not needed
 
   React.useEffect(() => {
     if (categories.length > 0) {
@@ -87,18 +74,83 @@ const Menu: React.FC<MenuProps> = ({ menuItems, addToCart, cartItems, updateQuan
 
   return (
     <>
-      <MobileNav 
-        activeCategory={activeCategory}
-        onCategoryClick={handleCategoryClick}
-      />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {selectedCategory === 'all' && (
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-noto font-semibold text-black mb-4">Our Menu</h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
-          Discover our selection of authentic dim sum, flavorful noodles, and traditional Asian dishes, 
-          all prepared with fresh ingredients and authentic techniques.
-        </p>
+        <h2 className="text-4xl font-noto font-semibold text-black mb-4">Our Customes</h2>
+        <div className="text-gray-700 max-w-3xl mx-auto text-left space-y-5">
+          <div>
+            <h3 className="font-semibold text-rental-dark mb-2">Reservation Policy</h3>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>50% downpayment required to reserve</li>
+              <li>No downpayment, no reservation</li>
+              <li>Send your dates to check availability</li>
+            </ul>
+          </div>
+          {!showMoreInfo && (
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => setShowMoreInfo(true)}
+                className="inline-flex items-center px-4 py-2 rounded-lg bg-rental-dark text-white text-sm hover:bg-rental-dark-hover transition-colors"
+              >
+                See more
+              </button>
+            </div>
+          )}
+
+          {showMoreInfo && (
+          <>
+          <div>
+            <h3 className="font-semibold text-rental-dark mb-2">Security Deposit</h3>
+            <p>₱1,000 per costume</p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-rental-dark mb-2">Inclusions</h3>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>1 x costume</li>
+              <li>1 x air blower fan</li>
+              <li>1 x battery pack (batteries not included)</li>
+              <li>Hats and masks depending on costume</li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-semibold text-rental-dark mb-2">Rental Duration</h3>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>Oct–Dec: 12 hours (up to 24 hours if available)</li>
+              <li>Jan–Sept: 24 hours</li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-semibold text-rental-dark mb-2">Late Return Fee</h3>
+            <p>Starts at ₱30–₱50 per hour</p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-rental-dark mb-2">Pickup & Return</h3>
+            <p>Handled by renter</p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-rental-dark mb-2">Modes of Payment</h3>
+            <p>GCash, BPI, SeaBank, UnionBank</p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-rental-dark mb-2">Damage Fee</h3>
+            <p>Damaged costumes start at ₱3,000</p>
+          </div>
+          <div>
+            <button
+              type="button"
+              onClick={() => setShowMoreInfo(false)}
+              className="inline-flex items-center px-4 py-2 rounded-lg bg-gray-200 text-gray-800 text-sm hover:bg-gray-300 transition-colors"
+            >
+              See less
+            </button>
+          </div>
+          </>
+          )}
+        </div>
       </div>
+      )}
 
       {categories.map((category) => {
         const categoryItems = menuItems.filter(item => item.category === category.id);

@@ -4,27 +4,36 @@ export default {
   theme: {
     extend: {
       colors: {
-        ramen: {
-          red: '#D7263D',
-          dark: '#0B0A0A',
-          charcoal: '#111113',
-          cream: '#FFF3E0',
-          beige: '#F7E7CE',
-          gold: '#E0A106',
-          sesame: '#D1C7B7',
-          seaweed: '#1F2937',
-          kimchi: '#B81D24'
+        rental: {
+          // Dark grey accents
+          dark: '#2C3E50',
+          'dark-hover': '#34495E',
+          charcoal: '#1A252F',
+          slate: '#475569',
+          // Off-white backgrounds
+          'off-white': '#FAFAFA',
+          cream: '#F5F5F5',
+          light: '#ECECEC',
+          // Accent colors
+          purple: '#9B59B6',
+          'purple-light': '#BB8FCE',
+          yellow: '#F1C40F',
+          orange: '#E67E22',
+          blue: '#3498DB',
+          pink: '#E91E63'
         }
       },
       fontFamily: {
-        'pretendard': ['Pretendard', 'system-ui', 'sans-serif'],
-        'noto-kr': ['Noto Serif KR', 'serif']
+        'inter': ['Inter', 'system-ui', 'sans-serif'],
+        'poppins': ['Poppins', 'sans-serif'],
+        'playfair': ['Playfair Display', 'serif']
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.4s ease-out',
         'bounce-gentle': 'bounceGentle 0.6s ease-out',
-        'scale-in': 'scaleIn 0.3s ease-out'
+        'scale-in': 'scaleIn 0.3s ease-out',
+        'float': 'float 3s ease-in-out infinite'
       },
       keyframes: {
         fadeIn: {
@@ -43,6 +52,10 @@ export default {
         scaleIn: {
           '0%': { transform: 'scale(0.95)', opacity: '0' },
           '100%': { transform: 'scale(1)', opacity: '1' }
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' }
         }
       }
     },

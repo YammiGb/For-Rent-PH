@@ -1,8 +1,8 @@
 /*
-  # Add ClickEats Menu Items and Categories
+  # Add For Rent PH Menu Items and Categories
 
   1. New Categories
-    - Add dim-sum, noodles, rice-dishes, beverages categories for ClickEats
+    - Add dim-sum, noodles, rice-dishes, beverages categories for For Rent PH
 
   2. New Menu Items
     - Platter category: Extra Small, Small, Medium, Large platters with dim sum assortments
@@ -21,7 +21,7 @@
     - Proper categorization for easy browsing
 */
 
--- First, add the new categories for ClickEats
+-- First, add the new categories for For Rent PH
 INSERT INTO categories (id, name, icon, sort_order, active) VALUES
   ('dim-sum', 'Dim Sum', '🥟', 1, true),
   ('noodles', 'Noodles', '🍜', 2, true),
