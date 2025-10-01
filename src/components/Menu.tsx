@@ -100,7 +100,7 @@ const Menu: React.FC<MenuProps> = ({ menuItems, addToCart, cartItems, updateQuan
           )}
 
           {showMoreInfo && (
-          <>
+          <React.Fragment>
           <div>
             <h3 className="font-semibold text-rental-dark mb-2">Security Deposit</h3>
             <p>₱1,000 per costume</p>
@@ -146,7 +146,7 @@ const Menu: React.FC<MenuProps> = ({ menuItems, addToCart, cartItems, updateQuan
               See less
             </button>
           </div>
-          </>
+          </React.Fragment>
           )}
         </div>
       </div>
